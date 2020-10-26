@@ -230,5 +230,4 @@ $this->title = \Yii::$app->params['site']['title'];
             }
         });
     }
-    /*test line2*/
 </script>
