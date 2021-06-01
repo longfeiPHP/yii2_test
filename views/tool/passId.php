@@ -94,7 +94,7 @@ $this->title = \Yii::$app->params['site']['title'];
     </div>
 
     <div class="box" style="width: 380px;margin-top: 10px;">
-        <div>sql中的数据转换成逗号分隔的字符串&nbsp;&nbsp;<button onclick="changeNum(this)">转换</button></div>
+        <div>sql中的数据转换成逗号分隔的字符串&nbsp;&nbsp;<button onclick="changeNum(this)">转换</button><button style="margin-left: 2px;" onclick="clearNum(this)">清空</button></div>
         <textarea style="width: 100%;height: 103px; margin-top: 5px;"></textarea>
     </div>
 
@@ -246,5 +246,12 @@ $this->title = \Yii::$app->params['site']['title'];
         let numList = textArea.val();
         numList=numList.replace(/\n/g,",");
         textArea.val(numList);
+    }
+
+    /**
+     * 清空数据
+     */
+    function clearNum(obj) {
+        $(obj).parent().next().val("")
     }
 </script>
