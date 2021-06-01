@@ -93,7 +93,14 @@ $this->title = \Yii::$app->params['site']['title'];
         <div class="threePercent">十月:October</div><div class="threePercent">十一月:November</div><div class="threePercent">十二月:December</div>
     </div>
 
+    <div class="box" style="width: 380px;margin-top: 10px;">
+        <div>sql中的数据转换成逗号分隔的字符串&nbsp;&nbsp;<button onclick="changeNum(this)">转换</button></div>
+        <textarea style="width: 100%;height: 103px; margin-top: 5px;"></textarea>
+    </div>
+
+
     <div style="clear:both;"></div>
+    <hr />
 </div>
 
 
@@ -230,5 +237,14 @@ $this->title = \Yii::$app->params['site']['title'];
             }
         });
     }
-    /**/
+
+    /**
+     * 数据转换
+     */
+    function changeNum(obj) {
+        let textArea = $(obj).parent().next();
+        let numList = textArea.val();
+        numList=numList.replace(/\n/g,",");
+        textArea.val(numList);
+    }
 </script>
