@@ -77,6 +77,11 @@ $this->title = \Yii::$app->params['site']['title'];
         开发环境医生端:<br />
         消息 <span>http://doctor.test.xlyhw.com/im/session-list</span><br />
         我的 <span>http://doctor.test.xlyhw.com/personal-info/list</span><br />
+        开发环境患者端:<br />
+        我的 <span>http://patient.test.xlyhw.com/ucenter</span><br />
+        我的医生 <span>http://patient.test.xlyhw.com/doctor/list</span><br />
+        购药订单 <span>http://patient.test.xlyhw.com/order/index</span><br />
+        服务订单 <span>http://patient.test.xlyhw.com/order/order-tcm-project-list</span><br />
     </div>
     <div class="box">
         <div>json格式化</div>
