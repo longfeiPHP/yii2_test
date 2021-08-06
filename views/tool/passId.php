@@ -63,6 +63,7 @@ $this->title = \Yii::$app->params['site']['title'];
 <div class="rows">
     <!--蓝湖相关地址-->
     <div class="box">
+        <a href="https://www.yuque.com/docs/share/d21f1af8-3f16-45a9-82bc-48361373ba77" target="_blank">语雀--技术文档</a><br />
         <a href="https://lanhuapp.com/url/ZqenX" target="_blank">蓝湖--业务后台</a><br />
         <a href="https://lanhuapp.com/url/lNE7I" target="_blank">蓝湖--知了有方</a><br />
         <a href="https://lanhuapp.com/url/2yz0x" target="_blank">蓝湖--知了小助手</a><br />
