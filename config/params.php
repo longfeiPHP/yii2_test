@@ -11,4 +11,5 @@ return [
         'vue/index',
         'vue/vue-form',
     ],
+    'authkey' => 'H5zl4qB87ZOZWerl',
 ];

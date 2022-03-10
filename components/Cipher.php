@@ -37,6 +37,78 @@ class Cipher
         static::$prescriptionKey = \Yii::$app->params['prescriptionKey'];
     }
 
+    //数字加密密钥
+    private static $pwdKey="4drMj6nFs2we53CmDWlRJLPxqVH7ao0fNpIiOBUyA8zEh9SutbkcYvG1gKQZXT";
+
+    //62位进制key
+    private static $baseKey= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    //数字加密密钥
+    private static $pwdKeyArray= [
+        4 => 0,
+        'd' => 1,
+        'r' => 2,
+        'M' => 3,
+        'j' => 4,
+        6 => 5,
+        'n' => 6,
+        'F' => 7,
+        's' => 8,
+        2 => 9,
+        'w' => 10,
+        'e' => 11,
+        5 => 12,
+        3 => 13,
+        'C' => 14,
+        'm' => 15,
+        'D' => 16,
+        'W' => 17,
+        'l' => 18,
+        'R' => 19,
+        'J' => 20,
+        'L' => 21,
+        'P' => 22,
+        'x' => 23,
+        'q' => 24,
+        'V' => 25,
+        'H' => 26,
+        7 => 27,
+        'a' => 28,
+        'o' => 29,
+        0 => 30,
+        'f' => 31,
+        'N' => 32,
+        'p' => 33,
+        'I' => 34,
+        'i' => 35,
+        'O' => 36,
+        'B' => 37,
+        'U' => 38,
+        'y' => 39,
+        'A' => 40,
+        8 => 41,
+        'z' => 42,
+        'E' => 43,
+        'h' => 44,
+        9 => 45,
+        'S' => 46,
+        'u' => 47,
+        't' => 48,
+        'b' => 49,
+        'k' => 50,
+        'c' => 51,
+        'Y' => 52,
+        'v' => 53,
+        'G' => 54,
+        1 => 55,
+        'g' => 56,
+        'K' => 57,
+        'Q' => 58,
+        'Z' => 59,
+        'X' => 60,
+        'T' => 61,
+    ];
+
     public static function setAuthKey ($key){
         static::$authkey = $key;
     }
@@ -507,5 +579,102 @@ class Cipher
     public static function getFaceId($str)
     {
         return static::decode($str, 2) - 102481888;
+    }
+
+    /**
+     * 加密数字
+     * @param $num int 需加密的整型数字
+     * @return string 加密值
+     */
+    public static function setPwdEncode($num)
+    {
+        if (!is_int($num)){
+            return "";
+        }
+        $hexArr = str_split(static::ConversionFrom10($num));
+        $keyArr = str_split(self::$pwdKey);
+        $keyLen = count($keyArr);
+        //加密校验位随机数字
+        $rand = mt_rand(0, $keyLen - 1);
+        //加密随机位
+        $res = $keyArr[$rand];
+        $verifyKey =ord($res);//校验位
+        foreach ($hexArr as $char) {
+            //使用62进制+加扰码替换数据
+            $offset = static::$pwdKeyArray[$char] + $rand;
+            $res .= $keyArr[$offset % $keyLen];
+            $verifyKey +=ord($keyArr[$offset % $keyLen]);
+        }
+        //补位校验位 校验位=除校验位的所有ASCII码值和
+        return $res .$keyArr[$verifyKey%61];
+    }
+
+    /**
+     * 解密数字
+     * @return string 加密值
+     */
+    public static function getPwdDecode($str)
+    {
+        if (! preg_match('/^[0-9a-zA-Z]{2,10}$/', $str)) {
+            return 0;
+        }
+        $firstChar = substr( $str, 0, 1 );//随机位
+        $verify = substr($str,-1);//校验位
+        $pwd=substr($str,1,strlen($str)-2);//密码数据
+        $hexArr =str_split($pwd);
+        $keyArr = str_split(self::$pwdKey);
+        $keyLen = count($keyArr);
+        $verifyKey =ord($firstChar); //校验值
+        $rand = static::$pwdKeyArray[$firstChar];
+        $hex = '';
+        foreach ($hexArr as $key =>$char){
+            $verifyKey +=ord($char);
+            if (static::$pwdKeyArray[$char] >= $rand) {
+                $pos = static::$pwdKeyArray[$char] - $rand;
+            } else {
+                $pos = $keyLen +static::$pwdKeyArray[$char] - $rand;
+            }
+            $hex .= $keyArr[$pos];
+        }
+        if ($keyArr[$verifyKey % 61] != $verify){
+            return 0;
+        }
+        $num = static::ConversionTo10($hex);
+        return $num;
+    }
+    /**
+     * 将任意进制转为10进制
+     * @param $str string 数
+     * @param int $from 进制
+     * @return int|string
+     */
+    public static function ConversionTo10($str,$from = 62){
+        if ($from <2 || $from > 62) return 0;
+        $str = strval($str);
+        $dict = self::$baseKey;
+        $len = strlen($str);
+        $dec = 0;
+        for($i = 0; $i < $len; $i++) {
+            $pos = strpos($dict, $str[$i]);
+            $dec = bcadd(bcmul(bcpow($from, $len - $i - 1), $pos), $dec);
+        }
+        return $dec;
+    }
+
+    /**
+     * 将10进制转为任何进制
+     * @param $num int 数字
+     * @param int $to 进制
+     * @return string
+     */
+    public static function ConversionFrom10($num,$to = 62) {
+        if ($to <2 || $to > 62) return "";
+        $dict = self::$baseKey;
+        $ret = '';
+        do {
+            $ret = $dict[bcmod($num, $to)] . $ret; //bcmod取得高精确度数字的余数。
+            $num = bcdiv($num, $to);  //bcdiv将二个高精确度数字相除。
+        } while ($num > 0);
+        return $ret;
     }
 }

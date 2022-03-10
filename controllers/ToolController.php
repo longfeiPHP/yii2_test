@@ -22,7 +22,7 @@ class ToolController extends WebController
     {
         /*本地项目数据库配置*/
         $db = require 'D:/workspace/zhiliao/db.php';
-        $method = ['setUserNumber','getUserNumber','setIdNumber','getIdNumber','setDocid','getDocid','setPatientid','getPatientid','setSalt','getSalt','setFaceId','getFaceId'];
+        $method = ['setUserNumber','getUserNumber','setIdNumber','getIdNumber','setDocid','getDocid','setPatientid','getPatientid','setSalt','getSalt','setFaceId','getFaceId','setPwdEncode','getPwdDecode'];
         /*读取apache配置文件*/
         $fileName = 'E:/Apache24/conf/httpd.conf';
         $apacheConf = file_get_contents($fileName);
@@ -53,6 +53,7 @@ class ToolController extends WebController
         $param = static::getParas();
         $num = isset($param['num']) ? $param['num'] : 0;
         $method = !empty($param['method']) ? $param['method'] : '';
+        if ($method=="setPwdEncode") $num = (int)$num;
         if (empty($num) || empty($method)) {
             return Response::show(400, 'param error', []);
         }
