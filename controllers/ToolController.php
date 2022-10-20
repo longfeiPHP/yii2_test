@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use app\models\UserThird;
 use Yii;
 use app\components\Response;
@@ -35,11 +36,21 @@ class ToolController extends WebController
             if ($v=='.'||$v=='..') continue;
             $phpAll[] = str_replace('.conf','',$v);
         }
+        /*处理上传的文件*/
+        $downLoadFile = '';
+        if (!empty($_FILES) && stripos($_FILES["css_file"]["name"],".css")){
+            $newFileName = str_replace(".css",".wxss",$_FILES["css_file"]["name"]);
+            move_uploaded_file($_FILES["css_file"]["tmp_name"], "D:/workspace/yiitest2/web/upload/" . $newFileName);
+            $downLoadFile = $newFileName;
+            /*css样式转换成小程序wxss*/
+            User::changeWxss($downLoadFile);
+        }
         return $this->render('passId',[
             'method' => $method,
             'db' => $db,
             'phpVersion' => $phpVersion,/*php当前版本*/
             'phpAll' => $phpAll,/*php所有可选版本*/
+            'downLoadFile' => $downLoadFile,
         ]);
     }
 

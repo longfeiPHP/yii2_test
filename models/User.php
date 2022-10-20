@@ -101,4 +101,21 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return $this->password === $password;
     }
+
+    /**
+     * css样式转换成小程序wxss
+     * @param $downLoadFile
+     */
+    public static function changeWxss($downLoadFile){
+        $content = file_get_contents("D:/workspace/yiitest2/web/upload/".$downLoadFile);
+        /*px 转rpx*/
+        $content = preg_replace('/px/', "rpx", $content);
+        /*像素值乘2*/
+        $content = preg_replace_callback('/\d+rpx/',function ($matches){
+            $a = (str_replace("rpx","",$matches[0])*2) . 'rpx';
+            return $a;
+        },$content);
+        file_put_contents("D:/workspace/yiitest2/web/upload/".$downLoadFile,$content);
+
+    }
 }

@@ -8,6 +8,7 @@ $this->title = \Yii::$app->params['site']['title'];
     .threePercent{width: 33.33%;float: left;}/*三分之一*/
 </style>
 <div style="width: 100%"><a style="float: right" href="/user/logout">退出</a> </div>
+<form method="post" action="/tool/pass" enctype="multipart/form-data">
 <div class="rows">
     <!--加密与解密-->
     <div class="box">
@@ -90,6 +91,15 @@ $this->title = \Yii::$app->params['site']['title'];
             <textarea id="jsonContent" style="width: 100%;height: 200px;"></textarea>
             <button id="jsonFormat">格式化</button>
         </div>
+        <hr />
+        <!--h5 css 转小程序 wxss-->
+        <div>h5 css 转小程序 wxss</div>
+        <div class="box">
+            <input type="file" name="css_file" /><input type="submit" name="submit" value="上传并转换" />
+            <?php if ($downLoadFile){?>
+                <a href="/upload/<?=$downLoadFile?>" download="<?=$downLoadFile?>">下载</a>
+            <?php }?>
+        </div>
     </div>
     <!--一到12月英文-->
     <div class="box" style="width: 380px;">
@@ -105,9 +115,13 @@ $this->title = \Yii::$app->params['site']['title'];
     </div>
 
 
+
+
+
     <div style="clear:both;"></div>
     <hr />
 </div>
+</form>
 
 
 
