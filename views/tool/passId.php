@@ -100,6 +100,7 @@ $this->title = \Yii::$app->params['site']['title'];
                 <a href="/upload/<?=$downLoadFile?>" download="<?=$downLoadFile?>">下载</a>
             <?php }?>
         </div>
+        <div>对目录放web/change_css进行递归转换</div><input type="button" onclick="changeCss()" value="转换" >
     </div>
     <!--一到12月英文-->
     <div class="box" style="width: 380px;">
@@ -158,6 +159,21 @@ $this->title = \Yii::$app->params['site']['title'];
             });
         });
     });
+    /**
+     *
+     */
+    function changeCss() {
+        $.ajax({
+            url:'/tool/change-css',
+            type:'POST',
+            data:{},
+            success:function (res) {
+                if (res.code==200) {
+                    alert("转换成功请到web/change_css目录查看结果")
+                }
+            }
+        });
+    }
     /**
      * 时间戳转换成时间
      */

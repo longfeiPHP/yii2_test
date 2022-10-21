@@ -107,7 +107,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      * @param $downLoadFile
      */
     public static function changeWxss($downLoadFile){
-        $content = file_get_contents("D:/workspace/yiitest2/web/upload/".$downLoadFile);
+        $content = file_get_contents($downLoadFile);
         /*px 转 rpx 像素值乘2*/
         $content = preg_replace_callback('/\d+px/',function ($matches){
             $a = (str_replace("px","",$matches[0])*2) . 'rpx';
@@ -119,7 +119,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
             $a = (str_replace("rem","",$matches[0])*1) . 'rpx';
             return $a;
         },$content);
-        file_put_contents("D:/workspace/yiitest2/web/upload/".$downLoadFile,$content);
+        file_put_contents($downLoadFile, $content);
 
     }
 }

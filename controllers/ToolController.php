@@ -43,7 +43,7 @@ class ToolController extends WebController
             move_uploaded_file($_FILES["css_file"]["tmp_name"], "D:/workspace/yiitest2/web/upload/" . $newFileName);
             $downLoadFile = $newFileName;
             /*css样式转换成小程序wxss*/
-            User::changeWxss($downLoadFile);
+            User::changeWxss("D:/workspace/yiitest2/web/upload/" . $newFileName);
         }
         return $this->render('passId',[
             'method' => $method,
@@ -188,6 +188,26 @@ db4;
         if ($puts){
             return Response::show(200,'success');
         }
+    }
+    /**
+     * 按目录转换css 到 小程序wxss
+     */
+    public function actionChangeCss($dir = "D:/workspace/yiitest2/web/change_css/")
+    {
+        $currentList = scandir($dir);
+        foreach ($currentList as $k => $v) {
+            if ($v == '.' || $v == '..') continue;
+            $curList = $dir.$v;
+            if (is_dir($curList)) {
+                $curList .= '/';
+                $this->actionChangeCss($curList);
+            } else {
+                if (strpos($v, '.css')) {/*css文件*/
+                    User::changeWxss($curList);
+                }
+            }
+        }
+        return Response::show(200,'success');
     }
     /************************************************以上是接口***************************************************************/
 }
