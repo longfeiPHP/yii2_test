@@ -16,7 +16,7 @@ $this->title = \Yii::$app->params['site']['title'];
         <button style="width: 120px;">加密</button>
         <button style="width: 120px;">解密</button><br />
         <?php foreach ($method as $k=>$v){?>
-            <button style="width: 120px;" onclick="opera('<?php echo $v;?>')"><?php echo $v;?></button>
+            <a style="width: 120px;display: block;float: left" onclick="opera('<?php echo $v;?>')"><?php echo $v;?></a>
             <?php
             if ($k%2!=0) echo '<br />';
             ?>
