@@ -8,7 +8,7 @@ $this->title = \Yii::$app->params['site']['title'];
     .threePercent{width: 33.33%;float: left;}/*三分之一*/
 </style>
 <div style="width: 100%"><a style="float: right" href="/user/logout">退出</a> </div>
-<form method="post" action="/tool/pass" enctype="multipart/form-data">
+<!--<form method="post" action="/tool/pass" enctype="multipart/form-data">-->
 <div class="rows">
     <!--加密与解密-->
     <div class="box">
@@ -127,7 +127,7 @@ $this->title = \Yii::$app->params['site']['title'];
     <div style="clear:both;"></div>
     <hr />
 </div>
-</form>
+<!--</form>-->
 
 
 
