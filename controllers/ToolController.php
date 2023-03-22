@@ -22,35 +22,35 @@ class ToolController extends WebController
     public function actionPass()
     {
         /*本地项目数据库配置*/
-        $db = require 'D:/workspace/zhiliao/db.php';
+//        $db = require 'D:/yuanzhou/db.php';
         $method = ['setUserNumber','getUserNumber','setIdNumber','getIdNumber','setDocid','getDocid','setPatientid','getPatientid','setSalt','getSalt','setFaceId','getFaceId','setPwdEncode','getPwdDecode'];
         /*读取apache配置文件*/
-        $fileName = 'E:/Apache24/conf/httpd.conf';
-        $apacheConf = file_get_contents($fileName);
-        $apacheConfArr = explode('#php version',$apacheConf);
-        $phpVersionArr = explode('/',$apacheConfArr[1]);
-        $phpVersion = str_replace('.conf','',$phpVersionArr[2]);
-        $filename = scandir('E:/Apache24/conf/phpversion');
-        $phpAll = [];
-        foreach ($filename as $k=>$v){
-            if ($v=='.'||$v=='..') continue;
-            $phpAll[] = str_replace('.conf','',$v);
-        }
+//        $fileName = 'E:/Apache24/conf/httpd.conf';
+//        $apacheConf = file_get_contents($fileName);
+//        $apacheConfArr = explode('#php version',$apacheConf);
+//        $phpVersionArr = explode('/',$apacheConfArr[1]);
+//        $phpVersion = str_replace('.conf','',$phpVersionArr[2]);
+//        $filename = scandir('E:/Apache24/conf/phpversion');
+//        $phpAll = [];
+//        foreach ($filename as $k=>$v){
+//            if ($v=='.'||$v=='..') continue;
+//            $phpAll[] = str_replace('.conf','',$v);
+//        }
         /*处理上传的文件*/
-        $downLoadFile = '';
-        if (!empty($_FILES) && stripos($_FILES["css_file"]["name"],".css")){
-            $newFileName = str_replace(".css",".wxss",$_FILES["css_file"]["name"]);
-            move_uploaded_file($_FILES["css_file"]["tmp_name"], "D:/workspace/yiitest2/web/upload/" . $newFileName);
-            $downLoadFile = $newFileName;
-            /*css样式转换成小程序wxss*/
-            User::changeWxss("D:/workspace/yiitest2/web/upload/" . $newFileName);
-        }
+//        $downLoadFile = '';
+//        if (!empty($_FILES) && stripos($_FILES["css_file"]["name"],".css")){
+//            $newFileName = str_replace(".css",".wxss",$_FILES["css_file"]["name"]);
+//            move_uploaded_file($_FILES["css_file"]["tmp_name"], "D:/workspace/yiitest2/web/upload/" . $newFileName);
+//            $downLoadFile = $newFileName;
+//            /*css样式转换成小程序wxss*/
+//            User::changeWxss("D:/workspace/yiitest2/web/upload/" . $newFileName);
+//        }
         return $this->render('passId',[
             'method' => $method,
-            'db' => $db,
-            'phpVersion' => $phpVersion,/*php当前版本*/
-            'phpAll' => $phpAll,/*php所有可选版本*/
-            'downLoadFile' => $downLoadFile,
+//            'db' => $db,
+//            'phpVersion' => $phpVersion,/*php当前版本*/
+//            'phpAll' => $phpAll,/*php所有可选版本*/
+//            'downLoadFile' => $downLoadFile,
         ]);
     }
 

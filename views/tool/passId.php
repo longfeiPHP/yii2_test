@@ -24,6 +24,7 @@ $this->title = \Yii::$app->params['site']['title'];
     </div>
 
     <!--用户id查询openid-->
+    <?php if (false){?>
     <div class="box" style="width: 300px;">
         <div>
             <div>根据用户id查询openid(本地开发环境)</div>
@@ -45,9 +46,10 @@ $this->title = \Yii::$app->params['site']['title'];
             </div>
         </div>
     </div>
+    <?php }?>
     <div class="box" style="width: 300px;">
         <div>切换本地环境数据库</div>
-        <div style="font-size: 8px;color: red;">当前（<span class="dbDsn"><?=$db['dsn']?></span>）</div>
+<!--        <div style="font-size: 8px;color: red;">当前（<span class="dbDsn">--><?//=$db['dsn']?><!--</span>）</div>-->
         <button onclick="changeDb(1)">本地开发库</button>
         <button onclick="changeDb(2)">本地测试库</button>
         <button onclick="changeDb(3)">线上开发库</button>
@@ -93,6 +95,7 @@ $this->title = \Yii::$app->params['site']['title'];
         </div>
         <hr />
         <!--h5 css 转小程序 wxss-->
+        <?php if (false){?>
         <div>h5 css 转小程序 wxss</div>
         <div class="box">
             <input type="file" name="css_file" /><input type="submit" name="submit" value="上传并转换" />
@@ -100,7 +103,9 @@ $this->title = \Yii::$app->params['site']['title'];
                 <a href="/upload/<?=$downLoadFile?>" download="<?=$downLoadFile?>">下载</a>
             <?php }?>
         </div>
-        <div>对目录放web/change_css进行递归转换</div><input type="button" onclick="changeCss()" value="转换" >
+        <div>对目录放web/change_css进行递归转换</div>
+        <input type="button" onclick="changeCss()" value="转换" >
+        <?php }?>
     </div>
     <!--一到12月英文-->
     <div class="box" style="width: 380px;">
@@ -238,7 +243,7 @@ $this->title = \Yii::$app->params['site']['title'];
      * 切换数据库
      * @param db 1/本地开发库 2/本地测试库 3/线上开发库 4/本地测试库
      */
-    function changeDb(db){
+    function changeDb(db){ alert('暂时关闭'); return false
         var confirms = true;
         if (db==3 || db==4) confirms = confirm("确定要切换到线上库吗，有可能会修改线上数据");
         if (confirms) {
