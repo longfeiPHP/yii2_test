@@ -48,7 +48,7 @@ $this->title = \Yii::$app->params['site']['title'];
     </div>
     <?php }?>
     <div class="box" style="width: 300px;">
-        <div>切换本地环境数据库</div>
+        <div style="color: #ccc">切换本地环境数据库<span style="color: #ccc">(暂时关闭)</span></div>
 <!--        <div style="font-size: 8px;color: red;">当前（<span class="dbDsn">--><?//=$db['dsn']?><!--</span>）</div>-->
         <button onclick="changeDb(1)">本地开发库</button>
         <button onclick="changeDb(2)">本地测试库</button>
