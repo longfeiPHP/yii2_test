@@ -61,6 +61,10 @@ $this->title = \Yii::$app->params['site']['title'];
         <div>时间戳:<input type="text" name="curTime" style="width: 88px;"/><button style="margin-left: 4px;" class="changeTime">转换</button></div>
         <div>时间:<span class="curDate"></span></div>
     </div>
+    <div class="box" style="width: 300px;">
+        小程序数据解密:<button onclick="getAes()">解密</button><br />
+        <textarea id="miniAes" placeholder="请输入密文" style="width: 280px;height: 170px;margin-top: 2px;"></textarea>
+    </div>
     <div style="clear:both;"></div>
 </div>
 <div class="rows">
@@ -164,6 +168,26 @@ $this->title = \Yii::$app->params['site']['title'];
             });
         });
     });
+    /**
+     * 小程序解密
+     */
+    function getAes() {
+        var str = $("#miniAes").val();
+        if (str==''){
+            alert("请输入需要解密的内容");
+            return false;
+        }
+        $.ajax({
+            url:'/tool/get-aes',
+            type:'POST',
+            data:{data:str},
+            success:function (res) {
+                if (res.code==200){
+                    $("#miniAes").val(res.data.rs);
+                }
+            }
+        });
+    }
     /**
      *
      */
@@ -283,8 +307,8 @@ $this->title = \Yii::$app->params['site']['title'];
      * 数据转换
      */
     function changeNum(obj) {
-        let textArea = $(obj).parent().next();
-        let numList = textArea.val();
+        var textArea = $(obj).parent().next();
+        var numList = textArea.val();
         numList=numList.replace(/\n/g,",");
         textArea.val(numList);
     }

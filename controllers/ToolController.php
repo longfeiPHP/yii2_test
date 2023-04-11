@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\components\Cipher;
 use app\models\User;
 use app\models\UserThird;
 use Yii;
@@ -55,6 +56,15 @@ class ToolController extends WebController
     }
 
     /************************************************以下是接口***************************************************************/
+    /**
+     * 获取小程序解密后数据
+     */
+    public function actionGetAes()
+    {
+        $param = static::getParas();
+        $res = Cipher::getAes($param['data']);
+        return Response::show(200, 'success', ['rs'=>$res]);
+    }
     /**
      * 加密解密接口
      */

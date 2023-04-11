@@ -677,4 +677,29 @@ class Cipher
         } while ($num > 0);
         return $ret;
     }
+
+    /**
+     * aes加密
+     * @author hailong 20221025
+     * @param string $data 要加密的字符串
+     * @return string 加密后的字符串
+     */
+    public static function setAes($data)
+    {
+        $key = 'skdidhjdksle2345';
+        $iv = "skdidhjdksle2345";
+        return base64_encode(openssl_encrypt($data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv));
+    }
+    /**
+     * aes解密
+     * @author hailong 20221025
+     * @param $s 加密后的字符串
+     * @return string
+     */
+    public static function getAes($s)
+    {
+        $key = 'skdidhjdksle2345';
+        $iv = "skdidhjdksle2345";
+        return openssl_decrypt(base64_decode($s), "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv);
+    }
 }
